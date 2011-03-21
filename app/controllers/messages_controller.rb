@@ -1,0 +1,156 @@
+class MessagesController < ApplicationController
+  # GET /messages
+  # GET /messages.xml
+  def index
+  	@new_messages_size = Message.count_by_status('new', current_user.id)
+  	@marked_messages_size = Message.count_by_status('marked', current_user.id)
+  	@trash_messages_size = Message.count_by_status('trash', current_user.id)
+  	@messages_size = Message.count_search(current_user.id)
+	m_page = params[:m_page].to_i
+	@m_id = params[:m_id]
+	case params[:m_status]
+	when 'new'
+		@messages = Message.by_status('new', current_user.id)
+	when 'marked'
+		@messages = Message.by_status('marked', current_user.id)
+	when 'trash'
+		@messages = Message.by_status('trash', current_user.id)
+	else
+		@messages = Message.search(params[:search], current_user.id)
+	end
+	m_size = @messages.size
+	if m_size%MESSAGE_ON_PAGE==0
+		@number_of_pages = m_size/MESSAGE_ON_PAGE
+	else
+		@number_of_pages = m_size/MESSAGE_ON_PAGE+1
+	end
+	m_page=1 if m_page < 1
+	m_page=@number_of_pages if (m_page>@number_of_pages && @number_of_pages>0)
+	#@m_page=m_page
+	@messages = @messages[((m_page-1)*MESSAGE_ON_PAGE)..(((m_page-1)*MESSAGE_ON_PAGE)+MESSAGE_ON_PAGE-1)]
+	@m_id = params[:m_id]
+	unless @m_id.nil?
+		@message = Message.find(@m_id)
+	end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @messages }
+    end
+  end
+
+  # GET /messages/1
+  # GET /messages/1.xml
+  def show
+  	
+    @message = Message.find(params[:id])
+    if current_user.id == @message.user_id
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @message }
+    end
+    else
+    respond_to do |format|
+      format.html { redirect_to('/messages') }
+      format.xml  { head :ok }
+    end
+    end
+  end
+
+  # GET /messages/new
+  # GET /messages/new.xml
+  def new
+  
+    @message = Message.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @message }
+    end
+  end
+
+  # GET /messages/1/edit
+  def edit
+    @message = Message.find(params[:id])
+    unless current_user.id == @message.user_id
+    respond_to do |format|
+      format.html { redirect_to('/messages') }
+      format.xml  { head :ok }
+    end
+    end
+
+  end
+
+  # POST /messages
+  # POST /messages.xml
+  def create
+  	#Message {"pecipient"=>"sdfds", "subject"=>"sdfsdf", "text"=>"fds fsd", "status"=>"uhk" was successfully created.
+
+    @message = Message.new(params[:message])
+	@message['user_id'] = current_user.id
+
+    respond_to do |format|
+      if @message.save
+        flash[:notice] = "Message was successfully created."
+        format.html { redirect_to(@message) }
+        format.xml  { render :xml => @message, :status => :created, :location => @message }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @message.errors, :status => :unprocessable_entity }
+      end
+    end
+
+  end
+
+  # PUT /messages/1
+  # PUT /messages/1.xml
+  def update
+    @message = Message.find(params[:id])
+
+    respond_to do |format|
+      if @message.update_attributes(params[:message])
+        flash[:notice] = 'Message was successfully updated.'
+        format.html { redirect_to(@message) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @message.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /messages/1
+  # DELETE /messages/1.xml
+  def destroy
+  	
+    @message = Message.find(params[:id])
+    @message.destroy if current_user.id == @message.user_id
+
+    respond_to do |format|
+      format.html { redirect_to(messages_url) }
+      format.xml  { head :ok }
+    end
+  end
+
+  def complete
+#Защита от смены статуса (изменения/удаления) чужих сообщений
+	message_ids = []
+	params[:message_ids] ||= []
+	params[:message_ids].each{|m_id|
+	if current_user.id == Message.find(m_id).user_id
+		message_ids.push(m_id)
+	end
+	}
+#----
+  	if params[:commit]=='Marked as Important'
+		Message.update_all(["status=?", 'marked'], :id => message_ids)
+  	elsif params[:commit]=='Unmarked as Important'
+		Message.update_all(["status=?", 'new'], :id => message_ids)
+	elsif params[:commit]=='Move to Trash/Delete'
+		Message.where(:status => 'trash').delete_all(:id => message_ids)
+		Message.where(:status => 'new').update_all(["status=?", 'trash'], :id => message_ids)
+		Message.where(:status => 'marked').update_all(["status=?", 'trash'], :id => message_ids)
+	end
+
+  	redirect_to :back, :params => @params
+  end
+end

@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>FriendlyMail</title>
+  <link href="/stylesheets/base_packaged.css?1300117646" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/main.css?1300124391" media="screen" rel="stylesheet" type="text/css" />
+<script src="/javascripts/prototype.js?1299762078" type="text/javascript"></script>
+<script src="/javascripts/effects.js?1299762078" type="text/javascript"></script>
+<script src="/javascripts/dragdrop.js?1299762078" type="text/javascript"></script>
+<script src="/javascripts/controls.js?1299762078" type="text/javascript"></script>
+<script src="/javascripts/rails.js?1299762078" type="text/javascript"></script>
+<script src="/javascripts/application.js?1299762078" type="text/javascript"></script>
+  <link media="only screen and (max-device-width: 480px)"  rel="stylesheet" type="text/css" href="/stylesheets/iphone.css"/>
+  <meta name="viewport" content="width=480,initial-scale=0.65,user-scalable=no" />
+</head>
+<body>
+
+<div id="container">
+<h1><a href="/">FriendlyMail</a></h1>
+</div>
+<div class="logout_table" align="right">
+<table  id="table" style="background-color:white" cellpadding="2" cellspacing="0"><tr>
+<td><p> You are logged in as <strong>ivanovsidor</strong></p></td>
+<td><p><a href="/logout">Logout</a></p></td>
+</tr></table>
+</div>
+<h1><a href="/messages">Your Messages</a></h1>
+
+
+<table id="form_messages"  width="80%" align="center" cellpadding="2" cellspacing="0" border="1">
+<tr><td width="20%" style="padding-left: 10; background-color: silver;">
+<form method="get" action="/messages/new"  class="button_to"><div><input type="submit" value="New message" /></div></form>
+<form accept-charset="UTF-8" action="/messages" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>  <p>
+    <input id="search" name="search" type="text" />
+    <input type="submit" value="Search by subject" />
+  </p>
+</form><a href="/messages?m_status=all">all messages</a> 1<br />
+<hr>
+<a href="/messages?m_status=new">new messages</a> 1<br />
+<a href="/messages?m_status=marked">marked messages</a> 0<br />
+<a href="/messages?m_status=trash">trash messages</a> 0<br />
+</td><td width="60%" style="padding-left: 10; background-color: silver;">
+
+<form accept-charset="UTF-8" action="/messages/complete" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="put" /></div><input name="commit" type="submit" value="Marked as Important" /> <input name="commit" type="submit" value="Unmarked as Important" /> <input name="commit" type="submit" value="Move to Trash/Delete" />
+<table id="table"  width="100%" align="center" style="background-color:silver" cellpadding="2" cellspacing="0" border="1">
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td><td width="20%">Recipient</td><td>Subject</td><td>Text</td></tr>
+<tr>
+<td><label for="message_83"><input id="message_ids_" name="message_ids[]" type="checkbox" value="83" /></label></td>
+<td>&nbsp;
+</td>
+<td>
+    <a href="/messages?m_id=83">recip@mail.ru</a>
+</td><td>
+    <a href="/messages?m_id=83">m_subj_ect ge</a>
+</td><td>
+    <a href="/messages?m_id=83">Its a very large message text</a>
+</td>
+</tr>
+</table>
+
+<div id="pages" align="right">
+<a href="/messages?m_page=1">1</a>&nbsp;
+</div>
+</form>
+</tr>
+</table>
+
+
+</body>
+</html>

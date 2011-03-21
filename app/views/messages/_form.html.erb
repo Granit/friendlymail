@@ -1,0 +1,44 @@
+
+<% form_for(@message) do |message_form| %>
+<%= errors_for(@message, "Unable to add new message").html_safe %>
+
+<div class="message_form">
+<% unless @message.nil? %>
+ <% form_for(@message) do |message_form| %>
+<table id="table"  width="80%" align="center" style="background-color:silver" cellpadding="2" cellspacing="0" border="1">
+<tr>
+<td width="20%">Recipient</td><td width="40%"><%= message_form.text_field :recipient %></td>
+<td>
+<% @message.errors['recipient'].each do |error| %>
+<%=error%><br />
+<% end %>
+</td>
+</tr><tr>
+<td>Subject</td><td><%= message_form.text_field :subject %></td>
+<td>
+<% @message.errors['subject'].each do |error| %>
+<%=error%><br />
+<% end %>
+</td>
+</tr><tr>
+<td>Text</td><td><%= message_form.text_area :text %></td>
+<td>
+<% @message.errors['text'].each do |error| %>
+<%=error%><br />
+<% end %>
+</td>
+</tr><tr>
+<td>Status</td><td><%= @message['status'] %></td>
+<td>
+<% @message.errors['status'].each do |error| %>
+<%=error%><br />
+<% end %>
+</td>
+</tr>
+</table>
+ <% end %>
+<% end %>
+</div>
+<p><center><%= message_form.submit "Save" %></center></p>
+<% end %>
+

@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>FriendlyMail</title>
+  <%= stylesheet_link_tag :all %>
+<%= javascript_include_tag :defaults %>
+  <%#= javascript_include_merged :base %>
+  <%#= stylesheet_link_merged :base %>
+  <%#= csrf_meta_tag %>
+  <%#= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "jquery.rails.js", "application.js" %>
+  <link media="only screen and (max-device-width: 480px)"  rel="stylesheet" type="text/css" href="/stylesheets/iphone.css"/>
+  <meta name="viewport" content="width=480,initial-scale=0.65,user-scalable=no" />
+</head>
+<body>
+
+<div id="container">
+<h1><%= link_to "FriendlyMail", root_path  %></h1>
+</div>
+<div class="logout_table" align="right">
+<table  id="table" style="background-color:white" cellpadding="2" cellspacing="0"><tr>
+<td><p> You are logged in as <strong><%=h current_user.login %></strong></p></td>
+<td><p><%= link_to 'Logout', logout_path %></p></td>
+</tr></table>
+</div>
+<h1><%= link_to "Your Messages", messages_path  %></h1>
+
+<%= yield %>
+
+</body>
+</html>

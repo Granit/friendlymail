@@ -1,0 +1,72 @@
+
+<table id="form_messages"  width="80%" align="center" cellpadding="2" cellspacing="0" border="1">
+<tr><td width="20%" style="padding-left: 10; background-color: silver;">
+<%= button_to 'New message', new_message_path, :method => 'get' %>
+<% form_tag messages_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search by subject", :name => nil %>
+  </p>
+<% end %>
+<%= link_to "all messages", messages_path(:m_status=>'all')  %> <%=@messages_size%><br />
+<hr>
+<%= link_to "new messages", messages_path(:m_status=>'new')  %> <%=@new_messages_size%><br />
+<%= link_to "marked messages", messages_path(:m_status=>'marked')  %> <%=@marked_messages_size%><br />
+<%= link_to "trash messages", messages_path(:m_status=>'trash')  %> <%=@trash_messages_size%><br />
+</td><td width="60%" style="padding-left: 10; background-color: silver;">
+<% if @message.nil? %>
+
+<%form_tag complete_messages_path, :method => :put do %>
+<%= submit_tag "Marked as Important" %> <%= submit_tag "Unmarked as Important" %> <%= submit_tag "Move to Trash/Delete" %>
+<table id="table"  width="100%" align="center" style="background-color:silver" cellpadding="2" cellspacing="0" border="1">
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td><td width="20%">Recipient</td><td>Subject</td><td>Text</td></tr>
+<% @messages.each_with_index do |message, index| %>
+<tr>
+<td><label for="message_ids_"><%= check_box_tag "message_ids[]", message.id %></label></td>
+<td><%if message.status=='marked' %>
+i
+<%elsif message.status=='trash' %>
+t
+<% else %>
+&nbsp;
+<% end %>
+</td>
+<td>
+    <%= link_to "#{message.recipient}", messages_path(:m_id=>message.id)  %>
+</td><td>
+    <%= link_to "#{message.subject}", messages_path(:m_id=>message.id)  %>
+</td><td>
+    <%= link_to "#{message.text[0..40]}", messages_path(:m_id=>message.id)  %>
+</td>
+</tr>
+<% end %>
+</table>
+
+<div id="pages" align="right">
+<% for i in 1..@number_of_pages %>
+<%= link_to i, messages_path(:m_status=>params[:m_status], :m_page=>i)  %>&nbsp;
+<% end %>
+</div>
+<%end%>
+
+<%else%>
+<% form_for(@message) do |message_form| %>
+<table id="table"  width="100%" align="center" style="background-color:silver" cellpadding="2" cellspacing="0" border="1">
+<tr>
+<td width="20%">Recipient</td><td><%= h @message.recipient %>&nbsp;</td>
+</tr><tr>
+<td>Subject</td><td><%= h @message.subject %>&nbsp;</td>
+</tr><tr>
+<td>Text</td><td><%= raw @message.text.gsub(/\n/, '<br/>') %>&nbsp;</td>
+</tr><tr>
+<td>Status</td><td><%= h @message.status %>&nbsp;</td>
+</tr>
+</table>
+    <%= link_to 'Show', @message %>
+    <%= link_to 'Edit', edit_message_path(@message) %>
+    <%= link_to 'Destroy',destroy_message_path(:id=>@message.id), :confirm => 'Are you sure?' %>
+ <% end %>
+<% end %>
+</tr>
+</table>

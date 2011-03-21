@@ -1,0 +1,13 @@
+--- 
+javascripts: 
+- base: 
+  - jquery-1.3.2.min
+  - jrails
+  - prototype
+  - effects
+  - controls
+  - dragdrop
+  - application
+stylesheets: 
+- base: 
+  - main

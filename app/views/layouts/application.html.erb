@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Friendlymail</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+  
+</head>
+<body>
+<div id="container">
+<h1><%= link_to "FriendlyMail", root_path, :class => 'someclass' -%></h1>
+</div>
+<% if !flash.blank? %>
+  <p style="color: blue"><%= flash[:notice] %></p>
+  <p style="color: red"><%= flash[:warning] %></p>
+  <p style="color: red"><%= flash[:error] %></p>
+  <% else %>
+  <p style="color: white">&nbsp;</p>
+<% end %>
+<%= yield %>
+
+</body>
+</html>
