@@ -9,7 +9,7 @@ gem 'rails', '3.0.1'
 gem 'pg', :require => 'pg'
 gem 'dynamic_form'
 gem 'asset_packager'
-gem "jquery-rails"
+
 group :test do
   gem 'rspec-rails'
   gem 'webrat', :git=> 'https://github.com/brynary/webrat.git'

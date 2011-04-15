@@ -1,0 +1,27 @@
+class ApplicationController < ActionController::Base
+  helper :all # include all helpers, all the time
+  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+include AuthenticatedTestHelper
+include AuthenticatedSystem
+
+  around_filter :xhr_exceptions
+  # ...
+  private
+=begin
+  def xhr_exceptions
+    yield
+    rescue
+      render('public/404', :layout => 'overlay', :status => 500)# if request.xhr?
+  end
+=end
+	def xhr_exceptions
+	  yield
+	  rescue Exception => e
+		render "public/exception", :layout => 'overlay', :status => status_code(e)
+	end
+
+	def status_code(exception)
+		ActiveRecord::RecordNotFound === exception ? :missing : 500
+	end
+
+end

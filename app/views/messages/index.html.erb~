@@ -63,7 +63,7 @@ t
 </tr><tr>
 <td>Subject<br /><font size="1">Тема</font></td><td><%= h @message.subject %>&nbsp;</td>
 </tr><tr>
-<td>Text<br /><font size="1">Текст сообщения</font></td><td><%= raw @message.text.gsub(/\n/, '<br/>') %>&nbsp;</td>
+<td>Text</td><td><%= raw @message.text.gsub(/\n/, '<br/>') %>&nbsp;</td>
 </tr><tr>
 <td>Status</td><td><%= h @message.status %>&nbsp;</td>
 </tr>

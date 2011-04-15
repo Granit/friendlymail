@@ -1,0 +1,19 @@
+<h1>Reports</h1>
+<table id="form_reports"  width="80%" align="center" style="background-color:silver" cellpadding="2" cellspacing="0" border="1">
+<tr>
+<td width="20%" style="padding-left: 10; background-color: silver;"><%= button_to 'Back to main page', root_path %></td>
+<td width="60%" style="padding-left: 10; background-color: silver;"> <%= button_to 'Cardholders', cardholders_path, :method => 'get' %></td>
+<td> <%= button_to 'Cards', cards_path, :method => 'get' %></td>
+</tr><tr>
+<td>&nbsp;</td>
+<td><%= @cardholders_size %> cardholders<br />
+<%= @assign_cardholders_size %> cardholders with assigned cards<br />
+<%= @unassign_cardholders_size %> cardholders without cards
+
+</td>
+<td> <%= @cards_size %> cards<br />
+<%= @unassign_cards_size %> free cards
+</td>
+</tr>
+
+</table>

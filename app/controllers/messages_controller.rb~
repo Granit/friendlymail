@@ -85,6 +85,8 @@ before_filter :login_required
   # POST /messages
   # POST /messages.xml
   def create
+  	#Message {"pecipient"=>"sdfds", "subject"=>"sdfsdf", "text"=>"fds fsd", "status"=>"uhk" was successfully created.
+
     @message = Message.new(params[:message])
 	@message['user_id'] = current_user.id
 

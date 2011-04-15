@@ -1,0 +1,8 @@
+<h1>Editing message</h1>
+
+<%= render :partial => "form" %>
+<center>
+<%= link_to 'Back', messages_path %> |
+<%= link_to 'Show', @message %> |
+<%= link_to 'Destroy',destroy_message_path(:id=>@message.id), :confirm => 'Are you sure?' %>
+</center>

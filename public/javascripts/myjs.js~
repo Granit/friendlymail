@@ -1,0 +1,6 @@
+$('a.overlay').live('click',function(){
+  $.get(this.href, function(html){
+    $('body').prepend(html)
+  });
+  return false;
+});

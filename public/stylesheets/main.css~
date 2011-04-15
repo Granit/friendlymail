@@ -65,3 +65,10 @@ a:visited {
 color:#000099;
 text-decoration:none
 }
+a.someclass {
+text-decoration:none
+color:blue;
+}
+a.someclass {
+color:blue;
+}

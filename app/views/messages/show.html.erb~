@@ -1,0 +1,19 @@
+<h1>Show message</h1>
+<table id="table"  width="80%" align="center" style="background-color:silver" cellpadding="2" cellspacing="0" border="1">
+<tr>
+<td width="20%">Recipient</td><td><%= h @message.recipient %>&nbsp;</td>
+</tr><tr>
+<td>Subject</td><td><%=h @message.subject %>&nbsp;</td>
+</tr><tr>
+<td>Text</td><td><%= raw @message.text.gsub(/\n/, '<br/>') %>&nbsp;</td>
+</tr><tr>
+<td>Status</td><td><%= h @message.status  %>&nbsp;</td>
+</tr>
+</table>
+
+<center>
+
+<%= link_to 'Back', messages_path %> |
+<%= link_to 'Edit', edit_message_path(@message.subject) %> |
+<%= link_to 'Destroy', @message, :confirm => 'Are you sure?', :method => :delete, :remote=>true %>
+</center>

@@ -1,0 +1,4 @@
+<h1>New cardholder</h1>
+<%= render :partial => "form" %>
+
+<center><%= button_to 'Back', cardholders_path, :method=>'get'%></center>

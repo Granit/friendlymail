@@ -73,6 +73,8 @@ GEM
     gherkin (2.3.5)
       json (>= 1.4.6)
     i18n (0.4.1)
+    jquery-rails (0.2.4)
+      rails (~> 3.0)
     json (1.4.6)
     json_pure (1.5.1)
     launchy (0.4.0)
@@ -143,6 +145,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   dynamic_form
+  jquery-rails
   launchy
   pg
   rails (= 3.0.1)
